@@ -1,6 +1,6 @@
 {
     "name": "jaqen-js",
-    "version": "0.0.3",
+    "version": "0.0.6",
     "description": "",
     "main": "./distribution/Jaqen.js",
     "types": "./distribution/Jaqen.d.ts",

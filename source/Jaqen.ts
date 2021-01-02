@@ -23,8 +23,8 @@ interface ServiceDefinitionInterface {
     registerComponents(components: Record<string, Component>): this
 }
 
-export function serviceDefinition(definition: ServiceDefinitionInterface) {
-    return { ...{ routes: [], api: {} }, ...definition }
+export function serviceDefinition(definition: Partial<ServiceDefinitionInterface>): ServiceDefinitionInterface {
+    return { ...{ routes: [], api: {} }, ...definition } as ServiceDefinitionInterface
 }
 
 function handleErrors(response: Response) {
@@ -71,7 +71,19 @@ class CreateVueApp {
 
     }
 
-    install(installer: ServiceDefinitionInterface): this {
+    install(installer: ServiceDefinitionInterface | ServiceDefinitionInterface[]): this {
+
+        if (Array.isArray(installer)) {
+
+            for (const definition of installer) {
+
+                this.install(definition)
+
+            }
+
+            return this
+
+        }
 
         this.registerComponents(installer.components)
 
