@@ -39,7 +39,7 @@ export function createVueApp(root: VueInstance): CreateVueApp {
 
     const app = createApp(root)
     const router = createRouter({
-        history: createWebHistory('/jaqen-ui'),
+        history: createWebHistory('/jaqen'),
         routes: []
     })
 
