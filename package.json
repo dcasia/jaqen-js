@@ -1,15 +1,15 @@
 {
     "name": "jaqen-js",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "description": "",
-    "main": "./source/Jaqen.js",
-    "types": "./source/Jaqen.d.ts",
+    "main": "./distribution/Jaqen.js",
+    "types": "./distribution/Jaqen.d.ts",
     "scripts": {
-        "prepublish": "tsc",
+        "prepublish": "rm -rf distribution && tsc",
         "build": "tsc"
     },
     "files": [
-        "source"
+        "distribution"
     ],
     "keywords": [],
     "author": "",

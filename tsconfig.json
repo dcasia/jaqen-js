@@ -1,13 +1,15 @@
 {
     "compilerOptions": {
         "target": "ES2015",
-        "module": "commonjs",
+        "module": "CommonJS",
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "sourceMap": true,
         "declaration": true,
+        "removeComments": true,
+        "outDir": "distribution",
         "lib": [
             "DOM",
             "ES5"
