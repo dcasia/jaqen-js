@@ -1,5 +1,6 @@
 import { App, Component, createApp, defineComponent } from 'vue'
-import { createRouter, Router, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { useError } from './compositions/ErrorBag'
 
 export const api = {
     extend(endpoints = {}) {
@@ -38,25 +39,24 @@ function handleErrors(response: Response) {
 export function createVueApp(root: VueInstance): CreateVueApp {
 
     const app = createApp(root)
-    const router = createRouter({
-        history: createWebHistory('/jaqen'),
-        routes: []
-    })
+    // const router = createRouter({
+    //     history: createWebHistory('/jaqen'),
+    //     routes: []
+    // })
+    //
+    // app.use(router)
 
-    app.use(router)
-
-    return new CreateVueApp(app, router)
+    return new CreateVueApp(app)
 
 }
 
 class CreateVueApp {
 
     private app: App
-    private router: Router
+    private routes: RouteRecordRaw[] = []
 
-    constructor(app: App, router: Router) {
+    constructor(app: App) {
         this.app = app
-        this.router = router
     }
 
     registerComponents(components: Record<string, Component>): this {
@@ -89,7 +89,7 @@ class CreateVueApp {
 
         for (const route of installer.routes) {
 
-            this.router.addRoute(route)
+            this.routes.push(route)
 
         }
 
@@ -101,6 +101,12 @@ class CreateVueApp {
 
     mount(container: string): this {
 
+        const router = createRouter({
+            history: createWebHistory('/jaqen'),
+            routes: this.routes
+        })
+
+        this.app.use(router)
         this.app.mount(container)
 
         return this
@@ -129,4 +135,8 @@ export const http = {
 
     }
 
+}
+
+export {
+    useError
 }
