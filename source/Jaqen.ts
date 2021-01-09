@@ -36,7 +36,11 @@ function handleErrors(response: Response) {
 
 }
 
-export function createVueApp(root: VueInstance): CreateVueApp {
+interface Configuration {
+    base: string
+}
+
+export function createVueApp(root: VueInstance, config: Partial<Configuration> = {}): CreateVueApp {
 
     const app = createApp(root)
     // const router = createRouter({
@@ -46,17 +50,19 @@ export function createVueApp(root: VueInstance): CreateVueApp {
     //
     // app.use(router)
 
-    return new CreateVueApp(app)
+    return new CreateVueApp(app, config)
 
 }
 
 class CreateVueApp {
 
     private app: App
+    private config: Partial<Configuration>
     private routes: RouteRecordRaw[] = []
 
-    constructor(app: App) {
+    constructor(app: App, config: Partial<Configuration> = {}) {
         this.app = app
+        this.config = config
     }
 
     registerComponents(components: Record<string, Component>): this {
@@ -102,7 +108,7 @@ class CreateVueApp {
     mount(container: string): this {
 
         const router = createRouter({
-            history: createWebHistory('/jaqen'),
+            history: createWebHistory(this.config.base),
             routes: this.routes
         })
 
